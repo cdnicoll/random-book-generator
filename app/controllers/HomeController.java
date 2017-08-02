@@ -75,39 +75,4 @@ public class HomeController extends Controller {
             return ok();
         });
     }
-
-
-
-
-
-    public CompletionStage<Result> sample() {
-        String urlQuery = "http://openlibrary.org/subjects/fantasy.json?published_in=2014-2017&limit=100000";
-        Logger.debug("Attempting risky calculation.");
-        WSRequest request = ws.url(urlQuery);
-        CompletionStage<WSResponse> completionStage = request.get();
-        //return completionStage.thenApply(response -> ok(response.asJson()));
-        return completionStage.thenApply(response -> {
-            JsonNode json = response.asJson();
-            JsonNode total = json.findPath("work_count");
-
-            Random rand = new Random();
-            int min = 0;
-            int max = total.asInt();
-            int randomNum = rand.nextInt((max - min) + 1) + min;
-
-            System.out.println(randomNum);
-            JsonNode works = json.findPath("works").get(randomNum);
-            //JsonNode works = json.findPath("works");
-            //System.out.println(Json.asciiStringify(json.findPath("works")));
-            return ok(works);
-        });
-    }
-
-    public Result sampleView()
-    {
-        String pageTitle = "Sample View";
-        Html htmlContent = new Html("<div><p>This is a sample view</p><p>Passing in HTML content</p></div>");
-        return ok(RandomBookGenerator.render(pageTitle, htmlContent));
-    }
-
 }
