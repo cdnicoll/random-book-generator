@@ -13,7 +13,6 @@ build
 .settings
 .settings/.*
 .project
-project
 *.project
 .buildpath
 *.db
