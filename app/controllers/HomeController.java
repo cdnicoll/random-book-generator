@@ -8,7 +8,7 @@ import play.libs.Json;
 import play.mvc.*;
 import play.libs.ws.*;
 import play.twirl.api.Html;
-import views.html.RandomBookGenerator;
+import views.html.*;
 
 import java.util.Random;
 import java.util.concurrent.CompletionStage;
@@ -105,7 +105,9 @@ public class HomeController extends Controller {
 
     public Result sampleView()
     {
-        return ok(RandomBookGenerator.render("foobar"));
+        String pageTitle = "Sample View";
+        Html htmlContent = new Html("<div><p>This is a sample view</p><p>Passing in HTML content</p></div>");
+        return ok(RandomBookGenerator.render(pageTitle, htmlContent));
     }
 
 }
