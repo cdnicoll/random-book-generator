@@ -1,0 +1,22 @@
+{
+  "name": "random-book-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "whatwg-fetch": "^2.0.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://eac-github.eac.ad.ea.com/conicoll/RandomBookGenerator.git"
+  },
+  "author": "",
+  "license": "ISC"
+}
