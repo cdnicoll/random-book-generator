@@ -1,8 +1,8 @@
 # Routes
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
-GET /subject/:subject   controllers.HomeController.subject(subject: String)
-GET /book/:works        controllers.HomeController.bookDetail(works: String)
+GET /subject/:subject   controllers.ApiController.subject(subject: String)
+GET /book/:works        controllers.ApiController.bookDetail(works: String)
 
 # An example controller showing a sample pages
 GET /sample/json        controllers.SampleController.sample
