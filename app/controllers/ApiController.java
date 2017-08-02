@@ -44,8 +44,8 @@ public class ApiController extends Controller {
         });
     }
 
-    public CompletionStage<Result> bookDetail(String worksUri) {
-        String urlQuery = "https://openlibrary.org/"+worksUri+".json";
+    public CompletionStage<Result> bookDetail(String id) {
+        String urlQuery = "https://openlibrary.org/works/"+id+".json";
         Logger.debug("Accessing Url:"+ urlQuery);
         WSRequest request = ws.url(urlQuery);
         CompletionStage<WSResponse> completionStage = request.get();
@@ -69,7 +69,7 @@ public class ApiController extends Controller {
             //System.out.println(Json.asciiStringify(json.findPath("works")));
             return ok(works);
             */
-            return ok();
+            return ok(json);
         });
     }
 }

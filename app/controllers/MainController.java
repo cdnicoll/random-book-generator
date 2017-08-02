@@ -1,17 +1,9 @@
 package controllers;
 
-import javax.inject.Inject;
-
-import com.fasterxml.jackson.databind.JsonNode;
 import play.Logger;
-import play.libs.Json;
 import play.mvc.*;
-import play.libs.ws.*;
 import play.twirl.api.Html;
 import views.html.*;
-
-import java.util.Random;
-import java.util.concurrent.CompletionStage;
 
 /**
  * This controller contains an action to handle HTTP requests
@@ -19,4 +11,10 @@ import java.util.concurrent.CompletionStage;
  */
 public class MainController extends Controller {
 
+    public Result index()
+    {
+        String pageTitle = "Random Book Generator";
+        Html htmlContent = new Html("<div><p>This is a sample view</p><p>Passing in HTML content</p></div>");
+        return ok(views.html.RandomBookGenerator.index.render(pageTitle, htmlContent));
+    }
 }

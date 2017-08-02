@@ -20,7 +20,14 @@
         * the page content. *@
         @content
 
+        <p class="book-synopsis">foobar</p>
+
+        <form name="myform" action="" method="get">enter something in the box: <br>
+            <input type="text" name="inputbox" value="">
+            <input type="button" name="button" value="click" onclick="testResults(this.form)">
+        </form>
+
         <script src="@routes.NodeModulesController.at("whatwg-fetch/fetch.js")" type="text/javascript"></script>
-        <script src="@routes.Assets.versioned("javascripts/main.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("javascripts/sample.js")" type="text/javascript"></script>
     </body>
 </html>

@@ -1,8 +1,12 @@
 # Routes
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
+# Page Views
+GET /        controllers.MainController.index
+
+# API Routes
 GET /subject/:subject   controllers.ApiController.subject(subject: String)
-GET /book/:works        controllers.ApiController.bookDetail(works: String)
+GET /book/works/:id        controllers.ApiController.bookDetail(id: String)
 
 # An example controller showing a sample pages
 GET /sample/json        controllers.SampleController.sample
