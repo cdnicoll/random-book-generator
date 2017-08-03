@@ -1,0 +1,1 @@
+web: target/universal/tmp/bin/random-book-generator -Dhttp.port=${PORT}
