@@ -1,1 +1,1 @@
-web: target/universal/tmp/bin/random-book-generator -Dhttp.port=${PORT}
+web: target/universal/tmp/bin/random-book-generator -Dhttp.port=${PORT} -DapplyEvolutions.default=true -Ddb.default.driver=org.postgresql.Driver -Ddb.default.url=${DATABASE_URL}
