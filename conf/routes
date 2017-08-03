@@ -2,16 +2,18 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 # Page Views
-GET /        controllers.MainController.index
+GET /                                               controllers.MainController.index
 
 # API Routes
-GET /subject/:subject   controllers.ApiController.subject(subject: String)
-GET /book/works/:id        controllers.ApiController.bookDetail(id: String)
+GET /subject/:subject                               controllers.ApiController.subject(subject: String)
+GET /subject/:startYear/:endYear/:subject       controllers.ApiController.subjectYear(startYear: Long, endYear: Long, subject: String)
+GET /book/works/:id                                 controllers.ApiController.bookDetail(id: String)
+GET /book/edition/:isbn                             controllers.ApiController.editionDetail(isbn: String)
 
 # An example controller showing a sample pages
-GET /sample/json        controllers.SampleController.sample
-GET /sample/view        controllers.SampleController.sampleView
+GET /sample/json                                    controllers.SampleController.sample
+GET /sample/view                                    controllers.SampleController.sampleView
 
 # Map static resources from the /public folder to the /assets URL path
-GET /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
-GET /node_modules/*file         controllers.NodeModulesController.at(file)
+GET /assets/*file                                   controllers.Assets.versioned(path="/public", file: Asset)
+GET /node_modules/*file                             controllers.NodeModulesController.at(file)

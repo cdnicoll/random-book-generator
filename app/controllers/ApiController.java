@@ -17,9 +17,38 @@ import java.util.concurrent.CompletionStage;
 public class ApiController extends Controller {
 
     @Inject WSClient ws;
+    int maxQueryLimit = 600;
+
+    private int getRandomInt(int totalResultSet) {
+        Random rand = new Random();
+        int min = 0;
+        int max = totalResultSet > maxQueryLimit ? maxQueryLimit : totalResultSet;
+        int randomNum = rand.nextInt((max - min) + 0) + min;
+
+        Logger.debug("Random Int: "+randomNum);
+
+        return randomNum;
+    }
 
     public CompletionStage<Result> subject(String subject) {
-        String urlQuery = "http://openlibrary.org/subjects/"+subject+".json?published_in=2014-2017&limit=100000&detail=true";
+        String urlQuery = "http://openlibrary.org/subjects/"+subject+".json?limit="+maxQueryLimit+"&detail=true";
+        Logger.debug("Accessing Url:"+ urlQuery);
+        WSRequest request = ws.url(urlQuery);
+        CompletionStage<WSResponse> completionStage = request.get();
+        return completionStage.thenApply(response -> {
+            JsonNode json = response.asJson();
+            JsonNode total = json.findPath("work_count");
+            Logger.debug("Work Count: "+ total.asInt());
+
+            int randIntResult = getRandomInt(total.asInt());
+
+            JsonNode works = json.findPath("works").get(randIntResult);
+            return ok(works);
+        });
+    }
+
+    public CompletionStage<Result> subjectYear(Long startYear, Long endYear, String subject) {
+        String urlQuery = "http://openlibrary.org/subjects/"+subject+".json?published_in="+startYear+"-"+endYear+"&limit=100000&detail=true";
         Logger.debug("Accessing Url:"+ urlQuery);
         WSRequest request = ws.url(urlQuery);
         CompletionStage<WSResponse> completionStage = request.get();
@@ -38,8 +67,6 @@ public class ApiController extends Controller {
 
             System.out.println(randomNum);
             JsonNode works = json.findPath("works").get(randomNum);
-            //JsonNode works = json.findPath("works");
-            //System.out.println(Json.asciiStringify(json.findPath("works")));
             return ok(works);
         });
     }
@@ -52,23 +79,17 @@ public class ApiController extends Controller {
         //return completionStage.thenApply(response -> ok(response.asJson()));
         return completionStage.thenApply(response -> {
             JsonNode json = response.asJson();
-            /*
-            JsonNode total = json.findPath("work_count");
-            Logger.debug("Work Count: "+ total.asInt());
-            Random rand = new Random();
-            int min = 0;
-            int max = total.asInt();
-            int randomNum = rand.nextInt((max - min) + 0) + min;
+            return ok(json);
+        });
+    }
 
-            Logger.debug("Random Int: "+randomNum);
-
-
-            System.out.println(randomNum);
-            JsonNode works = json.findPath("works").get(randomNum);
-            //JsonNode works = json.findPath("works");
-            //System.out.println(Json.asciiStringify(json.findPath("works")));
-            return ok(works);
-            */
+    public CompletionStage<Result> editionDetail(String isbn) {
+        String urlQuery = "https://openlibrary.org/api/books?bibkeys=ISBN:"+isbn+"&jscmd=details&format=json";
+        Logger.debug("Accessing Url:"+ urlQuery);
+        WSRequest request = ws.url(urlQuery);
+        CompletionStage<WSResponse> completionStage = request.get();
+        return completionStage.thenApply(response -> {
+            JsonNode json = response.asJson();
             return ok(json);
         });
     }
