@@ -4,7 +4,7 @@
  * two arguments, a `String` for the title of the page and an `Html`
  * object to insert into the body of the page.
  *@
-@(title: String)(content: Html)
+@(title: String)(genres: Map[String, String])
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,38 +22,21 @@
             <h2><button onclick="getRandomBook()">Discover!</button></h2>
         </div>
 
-        <input type="text" name="yearStart" value="">
-        <input type="text" name="yearEnd" value="">
 
-
+        <p>year Start <input type="text" name="yearStart" value=""></p>
+        <p>year end <input type="text" name="yearEnd" value=""></p>
 
         <div class="radio-button">
             <div class="btn-group">
                 <ul class="pagination">
+                @for((index, genre) <- genres) {
                     <li>
-                        <input id="fantasy" type="radio" name="genre" value="fantasy" checked="checked"/>
+                        <input id="@genre" type="radio" name="genre" value="@genre" @if(index == "0") { checked="checked" } />
                         <a>
-                            <label for="fantasy" class="input-group">Fantasy</label>
+                            <label for="@genre" class="input-group">@genre</label>
                         </a>
                     </li>
-                    <li>
-                        <input id="scifi" type="radio" name="genre" value="scifi"/>
-                        <a>
-                            <label for="scifi" class="input-group">Scifi</label>
-                        </a>
-                    </li>
-                    <li>
-                        <input id="romance" type="radio" name="genre" value="romance"/>
-                        <a>
-                            <label for="romance" class="input-group">Romance</label>
-                        </a>
-                    </li>
-                    <li>
-                        <input id="mystery" type="radio" name="genre" value="mystery"/>
-                        <a>
-                            <label for="mystery" class="input-group">Mystery</label>
-                        </a>
-                    </li>
+                }
                 </ul>
             </div>
 

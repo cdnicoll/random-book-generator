@@ -8,6 +8,7 @@ GET /                                               controllers.MainController.i
 GET /subject/:subject                               controllers.ApiController.subject(subject: String)
 GET /subject/:startYear/:endYear/:subject       controllers.ApiController.subjectYear(startYear: Long, endYear: Long, subject: String)
 GET /book/works/:id                                 controllers.ApiController.bookDetail(id: String)
+GET /book/edition/works/:id                                 controllers.ApiController.bookEditions(id: String)
 GET /book/edition/:isbn                             controllers.ApiController.editionDetail(isbn: String)
 
 # An example controller showing a sample pages

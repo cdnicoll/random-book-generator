@@ -83,6 +83,17 @@ public class ApiController extends Controller {
         });
     }
 
+    public CompletionStage<Result> bookEditions(String id) {
+        String urlQuery = "https://openlibrary.org/works/"+id+"/editions.json";
+        Logger.debug("Accessing Url:"+ urlQuery);
+        WSRequest request = ws.url(urlQuery);
+        CompletionStage<WSResponse> completionStage = request.get();
+        return completionStage.thenApply(response -> {
+            JsonNode json = response.asJson();
+            return ok(json);
+        });
+    }
+
     public CompletionStage<Result> editionDetail(String isbn) {
         String urlQuery = "https://openlibrary.org/api/books?bibkeys=ISBN:"+isbn+"&jscmd=details&format=json";
         Logger.debug("Accessing Url:"+ urlQuery);

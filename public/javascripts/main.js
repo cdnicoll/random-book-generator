@@ -3,8 +3,6 @@ function getRandomBook() {
     var selectedStartYear = document.querySelector('input[name="yearStart"]').value;
     var selectedEndYear = document.querySelector('input[name="yearEnd"]').value;
 
-    console.log(_.isNumber(selectedStartYear));
-
     var uri;
     if (selectedStartYear  === "" || selectedEndYear === "") {
         uri = selectedGenre;
@@ -13,18 +11,37 @@ function getRandomBook() {
         uri = +selectedStartYear+"/"+selectedEndYear+"/"+selectedGenre;
     }
 
-    console.log(uri);
-
     fetchRandomBook(uri, function(json) {
         fetchBookDetail(json.key, function(json) {
             var bookSynopsisElement = getElements('.book-synopsis');
             var description = undefined;
-            if (_.isUndefined(json.description.value)) {
+
+            if (typeof json !== 'undefined' && typeof json.description !== 'undefined' && typeof json.description.value !== 'undefined') {
+                description = json.description.value;
+            }
+            else if (typeof json.description !== 'undefined') {
                 description = json.description;
             }
             else {
-                description = json.description.value;
+                // @todo
+                // This is a bug where there is no description. What may need to be done to fix this
+                // is to check the book edition, the problem here is that there can be multiple editions
+                description = "This is a bug and I can't get descrition.\n";
+                description += "Title: " + json.title
             }
+
+            fetchBookEditions(json.key, function(json) {
+                console.log("There are " + json.size + " editions");
+                console.log("Book Editions: " , json);
+
+                fetchBookEdition(_.first(json.entries).isbn_10[0], function(json) {
+                    console.log(json);
+                    console.log(_.findKey(json, 'details'));
+                    console.log(_.first(json));
+                    console.log(_.first(json).details);
+                })
+
+            });
 
             bookSynopsisElement[0].innerText = description;
         });
@@ -58,5 +75,34 @@ function fetchBookDetail(id, callback)
         callback(json);
     }).catch(function(ex) {
         console.log('parsing failed', ex)
+        //callback(ex);
+    });
+}
+
+function fetchBookEditions(id, callback)
+{
+    fetch('/book/edition'+id)
+        .then(function(response) {
+            return response.json()
+        }).then(function(json) {
+        console.log('Book Editions Json: ', json);
+        callback(json);
+    }).catch(function(ex) {
+        console.log('parsing failed', ex)
+        //callback(ex);
+    });
+}
+
+function fetchBookEdition(isbn, callback)
+{
+    fetch('/book/edition/'+isbn)
+        .then(function(response) {
+            return response.json()
+        }).then(function(json) {
+        console.log('Book Editions Json: ', json);
+        callback(json);
+    }).catch(function(ex) {
+        console.log('parsing failed', ex)
+        //callback(ex);
     });
 }
