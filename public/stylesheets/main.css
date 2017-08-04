@@ -1,8 +1,6 @@
 .radio-button input[type="radio"]:checked + a {
     z-index: 2;
     color: #fff;
-    background-color: #428bca;
-    border-color: #428bca;
     cursor: default;
 }
 .radio-button label {
@@ -10,8 +8,9 @@
     margin-bottom: 0px;
     cursor: pointer;
 }
-.radio-button .pagination > li > a {
+.radio-button .col-md-2 > a {
     padding: 0px;
+    color: black;
 }
 .radio-button input[type="radio"] {
     width: 0px;
@@ -23,6 +22,26 @@
 
 /* ------------------------- */
 
+.main-container {
+    background-color: #1E8BC3;
+    padding: 20px 60px;
+}
+
+.row {
+    text-align: center;
+}
+
+.book-synopsis {
+    margin-top: 20px;
+    font-size: 14pt;
+    padding: 20px;
+    border: solid 1px #0d4866;
+    color: white;
+    background-color: #13648c;
+    text-align: left;
+}
+
+/*
 body,
 html {
     height: 100%;
@@ -115,3 +134,5 @@ button:hover {
 
 
 }
+
+*/

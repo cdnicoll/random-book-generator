@@ -1,21 +1,56 @@
-@*
- * This template is called from the `index` template. This template
- * handles the rendering of the page header and body tags. It takes
- * two arguments, a `String` for the title of the page and an `Html`
- * object to insert into the body of the page.
- *@
-@(title: String)(genres: Map[String, String])
+@* * This template is called from the `index` template. This template * handles the rendering of the page header and body
+tags. It takes * two arguments, a `String` for the title of the page and an `Html` * object to insert into the body of the
+page. *@ @(title: String)(genres: Map[String, String])
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        @* Here's where we render the page title `String`. *@
-        <title>@title</title>
-        <link rel="stylesheet" media="screen" href="@routes.NodeModulesController.at("bootstrap/dist/css/bootstrap.css")">
-        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
-        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
-    </head>
-    <body>
+
+<head>
+    @* Here's where we render the page title `String`. *@
+    <title>@title</title>
+    <link rel="stylesheet" media="screen" href="@routes.NodeModulesController.at("bootstrap/dist/css/bootstrap.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+</head>
+
+<body>
+    <div class="main-container">
+        <div class="row radio-button">
+             @for((index, genre) <- genres) {
+                <div class="col-md-2">
+                    <input id="@genre" type="radio" name="genre" value="@genre" @if(index=="0" ) { checked="checked" } />
+                     <a><label for="@genre" class="input-group">@genre</label></a>
+                </div>
+             }
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <img src="@routes.Assets.versioned("images/logo.png")" alt="" width="400px">
+            </div>
+            <div class="col-md-8">
+                <h1>Generate a Random Synopsis</h1>
+                <button type="button" onclick="getRandomBook()" class="btn btn-default btn-lg btn-block">Discover</button>
+                <p class="book-synopsis"></p>
+            </div>
+        </div>
+    </div>
+
+<p>year Start <input type="text" name="yearStart" value=""></p>
+<p>year end <input type="text" name="yearEnd" value=""></p>
+
+
+
+
+
+
+
+
+
+
+
+
+        <!--
         <p class="book-synopsis">foobar</p>
         <div style="background-color:lightblue" class="hero">
             <h1>Generate a Random Synopsis</h1>
@@ -39,11 +74,13 @@
                 }
                 </ul>
             </div>
+            -->
 
         <script src="@routes.NodeModulesController.at("jquery/dist/jquery.slim.js")" type="text/javascript"></script>
         <script src="@routes.NodeModulesController.at("underscore/underscore.js")" type="text/javascript"></script>
         <script src="@routes.NodeModulesController.at("bootstrap/dist/js/bootstrap.js")" type="text/javascript"></script>
         <script src="@routes.NodeModulesController.at("whatwg-fetch/fetch.js")" type="text/javascript"></script>
         <script src="@routes.Assets.versioned("javascripts/main.js")" type="text/javascript"></script>
-    </body>
+</body>
+
 </html>
