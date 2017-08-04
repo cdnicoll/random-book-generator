@@ -1,6 +1,6 @@
 @* * This template is called from the `index` template. This template * handles the rendering of the page header and body
 tags. It takes * two arguments, a `String` for the title of the page and an `Html` * object to insert into the body of the
-page. *@ @(title: String)(genres: Map[String, String])
+page. *@ @(title: String)(genres: Map[String, Genre])
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,12 +14,12 @@ page. *@ @(title: String)(genres: Map[String, String])
 </head>
 
 <body>
-    <div class="main-container">
+    <div id="main-container">
         <div class="row radio-button">
              @for((index, genre) <- genres) {
                 <div class="col-md-2">
-                    <input id="@genre" type="radio" name="genre" value="@genre" @if(index=="0" ) { checked="checked" } />
-                     <a><label for="@genre" class="input-group">@genre</label></a>
+                    <input onClick="updateBackground()" id="@genre.genre" data-color-light="@genre.colorLight" data-color-medium="@genre.colorMedium" data-color-dark="@genre.colorDark" type="radio" name="genre" value="@genre.genre" @if(index=="0" ) { checked="checked" } />
+                     <a><label for="@genre.genre" class="input-group">@genre.genre</label></a>
                 </div>
              }
         </div>
@@ -31,7 +31,7 @@ page. *@ @(title: String)(genres: Map[String, String])
             <div class="col-md-8">
                 <h1>Generate a Random Synopsis</h1>
                 <button type="button" onclick="getRandomBook()" class="btn btn-default btn-lg btn-block">Discover</button>
-                <p class="book-synopsis"></p>
+                <p id="book-synopsis"></p>
             </div>
         </div>
     </div>

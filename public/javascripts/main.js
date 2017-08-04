@@ -1,5 +1,9 @@
 function getRandomBook() {
-    var selectedGenre = document.querySelector('input[name="genre"]:checked').value;
+    var genreElement = document.querySelector('input[name="genre"]:checked');
+    var selectedGenre = genreElement.value;
+    //var selectedLightColor = genreElement.dataset.colorLight;
+
+
     var selectedStartYear = document.querySelector('input[name="yearStart"]').value;
     var selectedEndYear = document.querySelector('input[name="yearEnd"]').value;
 
@@ -13,7 +17,7 @@ function getRandomBook() {
 
     fetchRandomBook(uri, function(json) {
         fetchBookDetail(json.key, function(json) {
-            var bookSynopsisElement = getElements('.book-synopsis');
+            var bookSynopsisElement = getElements('#book-synopsis');
             var description = undefined;
 
             if (typeof json !== 'undefined' && typeof json.description !== 'undefined' && typeof json.description.value !== 'undefined') {
@@ -50,6 +54,18 @@ function getRandomBook() {
 
 function getElements(elmSel) {
     return document.querySelectorAll(elmSel);
+}
+
+function updateBackground() {
+    var genreElement = document.querySelector('input[name="genre"]:checked');
+    var selectedLightColor = genreElement.dataset.colorLight;
+    var selectedMediumColor = genreElement.dataset.colorMedium;
+    var selectedDarkColor = genreElement.dataset.colorDark;
+
+    // change background
+    getElements('#main-container')[0].style.backgroundColor = selectedLightColor;
+    getElements('#book-synopsis')[0].style.backgroundColor = selectedMediumColor;
+    getElements('#book-synopsis')[0].style.borderColor = selectedDarkColor;
 }
 
 function fetchRandomBook(url, callback)

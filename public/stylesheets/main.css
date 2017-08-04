@@ -22,7 +22,7 @@
 
 /* ------------------------- */
 
-.main-container {
+#main-container {
     background-color: #1E8BC3;
     padding: 20px 60px;
 }
@@ -31,7 +31,7 @@
     text-align: center;
 }
 
-.book-synopsis {
+#book-synopsis {
     margin-top: 20px;
     font-size: 14pt;
     padding: 20px;
