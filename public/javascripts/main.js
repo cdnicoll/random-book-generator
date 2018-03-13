@@ -1,4 +1,16 @@
+hideLoader(true);
+
+function hideLoader(hideLoader) {
+    if(hideLoader) {
+        getElements('.loader')[0].style.display = "none";
+    }
+    else {
+        getElements('.loader')[0].style.display = "";
+    }
+}
+
 function getRandomBook() {
+    hideLoader(false);
     var genreElement = document.querySelector('input[name="genre"]:checked');
     var selectedGenre = genreElement.value;
     //var selectedLightColor = genreElement.dataset.colorLight;
@@ -22,9 +34,11 @@ function getRandomBook() {
 
             if (typeof json !== 'undefined' && typeof json.description !== 'undefined' && typeof json.description.value !== 'undefined') {
                 description = json.description.value;
+                description += "\n\nTitle: " + json.title
             }
             else if (typeof json.description !== 'undefined') {
                 description = json.description;
+                description += "\n\nTitle: " + json.title
             }
             else {
                 // @todo
@@ -47,6 +61,7 @@ function getRandomBook() {
 
             });
 
+            hideLoader(true);
             bookSynopsisElement[0].innerText = description;
         });
     })
